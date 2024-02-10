@@ -1,0 +1,47 @@
+wait(0.2)
+
+local Players = game:GetService("Players"):GetPlayers()
+local UserInputService = game:GetService("UserInputService")
+
+local highlightsEnabled = false
+
+local function createHighlights()
+    for _, player in ipairs(Players) do
+        local character = player.Character
+        if character then
+            local humanoid = character
+            if humanoid then
+                local highlight = Instance.new("Highlight")
+                highlight.Parent = humanoid
+            end
+        end
+    end
+end
+
+local function removeHighlights()
+    for _, player in ipairs(Players) do
+        local character = player.Character
+        if character then
+            local humanoid = character
+            if humanoid then
+                for _, highlight in ipairs(humanoid:GetChildren()) do
+                    if highlight:IsA("Highlight") then
+                        highlight:Destroy()
+                    end
+                end
+            end
+        end
+    end
+end
+
+UserInputService.InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.F then
+        if highlightsEnabled then
+            removeHighlights()
+            highlightsEnabled = false
+        else
+            createHighlights()
+            highlightsEnabled = true
+        end
+    end
+end)
