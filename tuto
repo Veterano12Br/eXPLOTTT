@@ -13,6 +13,12 @@ local function createHighlights()
             if humanoid then
                 local highlight = Instance.new("Highlight")
                 highlight.Parent = humanoid
+                
+                -- Set the color based on the player's team color
+                local team = player.Team
+                if team then
+                    highlight.Color3 = team.TeamColor
+                end
             end
         end
     end
